@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="4dp"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="@color/card_background"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <!-- Imagen de la mascota: placeholder definido desde el adapter según tipo -->
+        <ImageView
+            android:id="@+id/imgMascota"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/RoundedImage" />
+
+        <!-- Info de la mascota -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="14dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- Nombre -->
+            <TextView
+                android:id="@+id/txtNombreMascota"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!--
+                Tipo de mascota ("Gato", "Perro"…) en el color del estado.
+                El adapter asigna el color según estadoAdopcion de cada item.
+            -->
+            <TextView
+                android:id="@+id/txtTipoMascota"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <!-- Raza -->
+            <TextView
+                android:id="@+id/txtRaza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+
+            <!-- Sexo -->
+            <TextView
+                android:id="@+id/txtSexo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+
+            <!--
+                Estado legible ("En adopción", "En proceso", "Adoptado").
+                Campo separado de txtTipoMascota — ya no son duplicados.
+            -->
+            <TextView
+                android:id="@+id/txtEstado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+
+            <!-- Botón acción -->
+            <Button
+                android:id="@+id/btnEnAdopcion"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/primary"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="En adopción"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

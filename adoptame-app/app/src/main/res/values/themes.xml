@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!--    <style name="Theme.Adoptame" parent="android:Theme.Material.Light.NoActionBar" />-->
+    <style name="Theme.MiMenu" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+    </style>
+    <style name="Base.Theme.Adoptame" parent="@style/Theme.Material3.DayNight.NoActionBar">
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary</item>
+        <item name="colorSecondary">@color/primary</item>
+        <item name="colorSecondaryVariant">@color/primary</item>
+    </style>
+    <style name="Theme.Adoptame" parent="@style/Base.Theme.Adoptame">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
+    </style>
+    <style name="Theme.Adoptame.NoActionBar" parent="@style/Theme.Adoptame">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="RoundedImage" parent="">
+        <item name="cornerSize">12dp</item>
+    </style>
+</resources>

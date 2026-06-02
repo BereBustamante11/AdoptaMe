@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="0dp"
+            android:paddingBottom="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp">
+
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="144dp"
+                android:layout_height="132dp"
+                android:src="@drawable/ic_logo_adoptame_foreground"
+                android:scaleType="centerCrop"
+                android:contentDescription="Logo AdoptaMe"/>
+
+            <TextView
+                android:textSize="38sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary"
+                android:id="@+id/lblTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="AdoptaMe"
+                android:letterSpacing="0.02"/>
+
+            <TextView
+                android:textSize="15sp"
+                android:textColor="@color/text_secondary"
+                android:gravity="center"
+                android:id="@+id/lblEslogan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Encuentra un nuevo amigo y dale un hogar lleno de amor"
+                android:lineSpacingExtra="3dp"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:background="@drawable/ic_login_card_background"
+                android:padding="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="34dp"
+                android:elevation="8dp">
+
+                <TextView
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:id="@+id/lblBienvenida"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bienvenido de nuevo"
+                    android:textAlignment="center"/>
+
+                <TextView
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:id="@+id/lblInformacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Inicia sesión para continuar adoptando"
+                    android:textAlignment="center"/>
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:id="@+id/lblCorreo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="26dp"
+                    android:text="Correo electrónico"/>
+
+                <EditText
+                    android:textSize="15sp"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:id="@+id/txtCorreo"
+                    android:background="@drawable/ic_input_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="8dp"
+                    android:hint="ejemplo@correo.com"
+                    android:singleLine="true"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"/>
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:id="@+id/lblContrasenna"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="Contraseña"/>
+
+                <EditText
+                    android:textSize="15sp"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:id="@+id/txtContrasenna"
+                    android:background="@drawable/ic_input_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="8dp"
+                    android:hint="Ingresa tu contraseña"
+                    android:singleLine="true"
+                    android:inputType="textPassword"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"/>
+
+                <LinearLayout
+                    android:gravity="end"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp">
+
+                    <TextView
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary"
+                        android:layout_gravity="center"
+                        android:id="@+id/btnRecuperar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="¿Olvidaste tu contraseña?"
+                        android:textAlignment="center"/>
+                </LinearLayout>
+
+                <!-- Sin android:onClick — manejado en MainActivity.kt -->
+                <Button
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/btnIniciarSesion"
+                    android:background="@drawable/ic_button_primary_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="26dp"
+                    android:text="Iniciar sesión"
+                    android:textAllCaps="false"/>
+
+                <TextView
+                    android:textSize="13sp"
+                    android:textColor="@color/text_secondary"
+                    android:gravity="center"
+                    android:id="@+id/lblFrases"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:text="Adopta • Cuida • Ama"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp">
+
+                <TextView
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:id="@+id/lblCuenta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¿No tienes cuenta?"/>
+
+                <TextView
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary"
+                    android:id="@+id/btnRegistrarse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Regístrate"
+                    android:layout_marginStart="6dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

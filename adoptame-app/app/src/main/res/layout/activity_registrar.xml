@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistrarActivity">
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="40dp"
+            android:paddingBottom="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp">
+
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="144dp"
+                android:layout_height="132dp"
+                android:src="@drawable/ic_logo_adoptame_foreground"
+                android:scaleType="centerCrop"
+                android:contentDescription="Logo AdoptaMe"/>
+
+            <TextView
+                android:textSize="38sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary"
+                android:id="@+id/lblTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="AdoptaMe"
+                android:letterSpacing="0.02"/>
+
+            <TextView
+                android:textSize="15sp"
+                android:textColor="@color/text_secondary"
+                android:gravity="center"
+                android:id="@+id/lblEslogan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Crea tu cuenta y empieza a cambiar vidas"
+                android:lineSpacingExtra="3dp"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:background="@drawable/ic_login_card_background"
+                android:padding="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:elevation="8dp">
+
+                <TextView
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:id="@+id/lblCuenta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Crear cuenta"
+                    android:textAlignment="center"/>
+
+                <TextView
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:id="@+id/lblInformacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Regístrate para adoptar, cuidar y apoyar animalitos"
+                    android:textAlignment="center"/>
+
+                <!-- CAMPO NUEVO: Nombre -->
+                <TextView
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Nombre"/>
+
+                <EditText
+                    android:textSize="15sp"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:id="@+id/txtNombre"
+                    android:background="@drawable/ic_input_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="8dp"
+                    android:hint="Ej. Juan"
+                    android:singleLine="true"
+                    android:inputType="textPersonName|textCapWords"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"/>
+
+                <!-- CAMPO NUEVO: Apellido Paterno -->
+                <TextView
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="Apellido paterno"/>
+
+                <EditText
+                    android:textSize="15sp"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:id="@+id/txtApellidoPaterno"
+                    android:background="@drawable/ic_input_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="8dp"
+                    android:hint="Ej. Pérez"
+                    android:singleLine="true"
+                    android:inputType="textPersonName|textCapWords"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"/>
+                <TextView
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="Apellido materno (Opcional)"/>
+
+                <EditText
+                    android:textSize="15sp"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:id="@+id/txtApellidoMaterno"
+                    android:background="@drawable/ic_input_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="8dp"
+                    android:hint="Ej. López"
+                    android:singleLine="true"
+                    android:inputType="textPersonName|textCapWords"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"/>
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="Teléfono (Opcional)"/>
+
+                <EditText
+                    android:textSize="15sp"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:id="@+id/txtTelefono"
+                    android:background="@drawable/ic_input_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="8dp"
+                    android:hint="Ej. 5512345678"
+                    android:singleLine="true"
+                    android:inputType="phone"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"/>
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:id="@+id/lblCorreo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="Correo electrónico"/>
+
+                <EditText
+                    android:textSize="15sp"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:id="@+id/txtCorreo"
+                    android:background="@drawable/ic_input_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="8dp"
+                    android:hint="Ingresa tu correo"
+                    android:singleLine="true"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"/>
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:id="@+id/lblContrasenna"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="Contraseña"/>
+
+                <EditText
+                    android:textSize="15sp"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:id="@+id/txtContrasenna"
+                    android:background="@drawable/ic_input_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="8dp"
+                    android:hint="Ingresa tu contraseña"
+                    android:singleLine="true"
+                    android:inputType="textPassword"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"/>
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:id="@+id/lblContrasenna2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="Confirma tu contraseña"/>
+
+                <EditText
+                    android:textSize="15sp"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:id="@+id/txtContrasenna2"
+                    android:background="@drawable/ic_input_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="8dp"
+                    android:hint="Confirma tu contraseña"
+                    android:singleLine="true"
+                    android:inputType="textPassword"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"/>
+
+                <!-- Sin android:onClick — manejado en RegistrarActivity.kt -->
+                <Button
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/btnCrear"
+                    android:background="@drawable/ic_button_primary_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="28dp"
+                    android:text="Crear cuenta"
+                    android:textAllCaps="false"/>
+
+                <TextView
+                    android:textSize="13sp"
+                    android:textColor="@color/text_secondary"
+                    android:gravity="center"
+                    android:id="@+id/lblFrase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Tu nuevo mejor amigo te está esperando"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
