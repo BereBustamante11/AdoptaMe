@@ -96,12 +96,14 @@ class MascotaRepository {
         if (USE_MOCK) {
             return Result.Success(
                 SolicitudAdopcion(
-                    idSolicitud          = (100..999).random(),
-                    idMascota            = request.idMascota,
+                    idSolicitud = (100..999).random(),
+                    idMascota = request.idMascota,
                     idUsuarioSolicitante = request.idUsuarioSolicitante,
-                    mensaje              = request.mensaje,
-                    estadoSolicitud      = "PENDIENTE",
-                    fechaSolicitud       = null
+                    mensaje = request.mensaje,
+                    estadoSolicitud = "PENDIENTE",
+                    fechaSolicitud = null,
+                    nombreMascota ="tommy",
+                    nombreSolicitante = "julio"
                 )
             )
         }

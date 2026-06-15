@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import mx.edu.unpa.adoptame.R
 import mx.edu.unpa.adoptame.databinding.ItemGaleriaImagenBinding
 import mx.edu.unpa.adoptame.model.ImagenMascota
+import mx.edu.unpa.adoptame.network.NetworkConfig
 
 /**
  * Adapter para la galería horizontal de fotos en DetalleMascotaActivity.
@@ -23,7 +24,7 @@ class GaleriaImagenesAdapter(
 
         fun bind(imagen: ImagenMascota) {
             // 1. Define tu IP y arma la URL completa
-            val baseUrl = "http://192.168.1.75:8181"
+            val baseUrl = NetworkConfig.BASE_URL
             val urlCompleta = baseUrl + imagen.urlImagen
 
             // 2. Pásale la urlCompleta a Glide

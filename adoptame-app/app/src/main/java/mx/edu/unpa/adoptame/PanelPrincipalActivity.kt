@@ -8,13 +8,20 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import mx.edu.unpa.adoptame.adapter.TipoMascotaAdapter
 import mx.edu.unpa.adoptame.databinding.ActivityPanelPrincipalBinding
 import mx.edu.unpa.adoptame.model.TipoMascota
+import mx.edu.unpa.adoptame.network.NetworkConfig
 import mx.edu.unpa.adoptame.repository.MascotaRepository
 import mx.edu.unpa.adoptame.session.SessionManager
 import mx.edu.unpa.adoptame.util.Result
+import mx.edu.unpa.adoptame.util.UrlHelper
 
 class PanelPrincipalActivity : AppCompatActivity() {
 
@@ -29,11 +36,20 @@ class PanelPrincipalActivity : AppCompatActivity() {
 
         sessionManager = SessionManager(this)
 
-        // Configura el Toolbar con el logo y los íconos de acción (+, menú)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        configurarAvatarToolbar()
         cargarTiposMascota()
+    }
+
+    /**
+     * onResume: recargamos el avatar por si el usuario regresa de
+     * EditarPerfilActivity habiendo cambiado su foto.
+     */
+    override fun onResume() {
+        super.onResume()
+        configurarAvatarToolbar()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -43,20 +59,48 @@ class PanelPrincipalActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.action_mis_solicitudes -> {
+                startActivity(Intent(this, GestionSolicitudesActivity::class.java))
+                true
+            }
             R.id.action_registrar_mascota -> {
                 startActivity(Intent(this, RegistrarMascotaActivity::class.java))
                 true
             }
             R.id.action_cerrar_sesion -> {
                 sessionManager.clearSession()
-                val intent = Intent(this, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                val intent = Intent(this, MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
                 startActivity(intent)
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    // ── Avatar ────────────────────────────────────────────────────────────────
+
+    /**
+     * Carga la foto de perfil desde la URL en caché (SessionManager).
+     * Si no hay URL, Glide muestra el placeholder automáticamente.
+     *
+     * El click navega a EditarPerfilActivity.
+     */
+    private fun configurarAvatarToolbar() {
+        Glide.with(this)
+            .load(UrlHelper.fotoPerfilUrl(sessionManager.getUserFotoUrl()))
+            .transform(CircleCrop())
+            .placeholder(R.drawable.ic_avatar_placeholder)
+            .error(R.drawable.ic_avatar_placeholder)
+            .into(binding.imgAvatarToolbar)
+
+        binding.imgAvatarToolbar.setOnClickListener {
+            startActivity(Intent(this, EditarPerfilActivity::class.java))
+        }
+    }
+
+    // ── Tipos de mascota ──────────────────────────────────────────────────────
 
     private fun cargarTiposMascota() {
         lifecycleScope.launch {
@@ -72,13 +116,24 @@ class PanelPrincipalActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * FIX (code smell): las llamadas ahora se hacen en paralelo con async/awaitAll.
+     * Antes eran secuenciales (1 por tipo), ahora todas se lanzan a la vez.
+     */
     private fun configurarRecycler(tipos: List<TipoMascota>) {
-        // Para cada tipo buscamos cuántos animales disponibles hay (en mock o real)
         lifecycleScope.launch {
-            val conteos = tipos.associate { tipo ->
-                val resultMascotas = mascotaRepository.getMascotasDisponibles(tipo.idTipoMascota)
-                val count = if (resultMascotas is Result.Success) resultMascotas.data.size else 0
-                tipo.idTipoMascota to count
+            val conteos = try {
+                coroutineScope {
+                    tipos.map { tipo ->
+                        async {
+                            val result = mascotaRepository.getMascotasDisponibles(tipo.idTipoMascota)
+                            val count  = if (result is Result.Success) result.data.size else 0
+                            tipo.idTipoMascota to count
+                        }
+                    }.awaitAll().toMap()
+                }
+            } catch (_: Exception) {
+                tipos.associate { it.idTipoMascota to 0 }
             }
 
             val adapter = TipoMascotaAdapter(tipos, conteos) { tipoSeleccionado ->
@@ -88,9 +143,8 @@ class PanelPrincipalActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
-            binding.recyclerGridMascota.layoutManager = GridLayoutManager(
-                this@PanelPrincipalActivity, 2
-            )
+            binding.recyclerGridMascota.layoutManager =
+                GridLayoutManager(this@PanelPrincipalActivity, 2)
             binding.recyclerGridMascota.adapter = adapter
         }
     }

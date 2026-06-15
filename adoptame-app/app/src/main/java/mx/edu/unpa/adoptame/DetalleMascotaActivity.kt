@@ -14,6 +14,7 @@ import mx.edu.unpa.adoptame.model.estadoLabel
 import mx.edu.unpa.adoptame.model.sexoLabel
 import mx.edu.unpa.adoptame.model.request.SolicitudRequest
 import mx.edu.unpa.adoptame.network.ApiService
+import mx.edu.unpa.adoptame.network.NetworkConfig
 import mx.edu.unpa.adoptame.network.RetrofitClient
 import mx.edu.unpa.adoptame.repository.MascotaRepository
 import mx.edu.unpa.adoptame.session.SessionManager
@@ -124,7 +125,7 @@ class DetalleMascotaActivity : AppCompatActivity() {
     }
 
     private fun cargarImagenes(idMascota: Int) {
-        val baseUrl = "http://192.168.1.75:8181"
+        val baseUrl = NetworkConfig.BASE_URL
         lifecycleScope.launch {
             try {
                 val resp = apiService.getImagenesMascota(idMascota)

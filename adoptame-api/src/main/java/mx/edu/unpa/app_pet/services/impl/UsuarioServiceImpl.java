@@ -1,6 +1,7 @@
 package mx.edu.unpa.app_pet.services.impl;
 
 import mx.edu.unpa.app_pet.domains.Usuario;
+import mx.edu.unpa.app_pet.dtos.request.ActualizarPerfilRequestDTO;
 import mx.edu.unpa.app_pet.dtos.request.LoginRequestDTO;
 import mx.edu.unpa.app_pet.dtos.request.UsuarioRequestDTO;
 import mx.edu.unpa.app_pet.dtos.response.UsuarioResponseDTO;
@@ -51,5 +52,39 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         // Retorna la información del usuario logueado mapeado a su Response DTO
         return usuarioMapper.toResponseDto(usuario);
+    }
+
+    @Override
+    public UsuarioResponseDTO getUsuarioById(Integer id) {
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado."));
+        return usuarioMapper.toResponseDto(usuario);
+    }
+    // Agrega estos métodos a tu implementación
+
+    @Override
+    public UsuarioResponseDTO actualizarPerfil(Integer id, ActualizarPerfilRequestDTO request) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado."));
+
+        usuario.setNombre(request.getNombre());
+        usuario.setApellidoPaterno(request.getApellidoPaterno());
+        usuario.setApellidoMaterno(request.getApellidoMaterno());
+        usuario.setTelefono(request.getTelefono());
+
+        if (request.getUrlFotoPerfil() != null) {
+            usuario.setUrlFotoPerfil(request.getUrlFotoPerfil());
+        }
+
+        Usuario actualizado = usuarioRepository.save(usuario);
+        return usuarioMapper.toResponseDto(actualizado);
+    }
+
+    @Override
+    public void actualizarUrlFoto(Integer id, String urlFoto) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado."));
+
+        usuario.setUrlFotoPerfil(urlFoto);
+        usuarioRepository.save(usuario);
     }
 }

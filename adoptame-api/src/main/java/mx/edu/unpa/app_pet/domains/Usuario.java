@@ -25,6 +25,8 @@ public class Usuario {
 
     @Column(name = "apellidoMaterno", length = 100)
     private String apellidoMaterno;
+    @Column(name = "urlFotoPerfil", length = 500)
+    private String urlFotoPerfil;
 
     @Column(nullable = false, length = 150, unique = true)
     private String email;

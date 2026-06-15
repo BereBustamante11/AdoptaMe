@@ -10,7 +10,7 @@ object RetrofitClient {
 
     // Para emulador Android → "http://10.0.2.2:PUERTO/api/"
     // Para dispositivo físico → "http://192.168.X.X:PUERTO/api/"
-    const val BASE_URL = "http://192.168.1.75:8181/api/"
+    const val BASE_URL = NetworkConfig.BASE_URL +"/api/"
 
     // ── ELIMINADO: authenticatedInstance(token) ───────────────────────────────
     // El backend no usa JWT — todas las llamadas van sin Authorization header.

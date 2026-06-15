@@ -9,6 +9,7 @@ import mx.edu.unpa.adoptame.databinding.ItemMascotaListaBinding
 import mx.edu.unpa.adoptame.model.Mascota
 import mx.edu.unpa.adoptame.model.estadoLabel
 import mx.edu.unpa.adoptame.model.sexoLabel
+import mx.edu.unpa.adoptame.network.NetworkConfig
 
 /**
  * Adapter para el listado de mascotas por categoría.
@@ -69,7 +70,7 @@ class MascotaListaAdapter(
             if (!urlBackend.isNullOrBlank()) {
 
                 // 1. Define tu IP (Cambia esta IP por la IP real de tu computadora en tu Wi-Fi)
-                val baseUrl = "http://192.168.1.75:8181"
+                val baseUrl = NetworkConfig.BASE_URL
 
                 // 2. Une la IP con la ruta que mandó el backend
                 val urlCompleta = baseUrl + urlBackend

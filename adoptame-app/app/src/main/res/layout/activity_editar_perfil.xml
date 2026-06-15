@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fitsSystemWindows="true">
+
+  <!-- ── AppBar ────────────────────────────────────────────────────────── -->
+  <com.google.android.material.appbar.AppBarLayout
+      android:id="@+id/appBarLayout"
+      android:layout_width="match_parent"
+      android:layout_height="180dp"
+      android:background="@color/primary"
+      android:fitsSystemWindows="true"
+      app:elevation="0dp">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@android:color/white"
+        app:title="Editar perfil"
+        app:titleTextColor="@android:color/white"/>
+
+  </com.google.android.material.appbar.AppBarLayout>
+
+  <!-- ── Contenido scrollable ─────────────────────────────────────────── -->
+  <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:overScrollMode="never"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="72dp"
+        android:paddingBottom="32dp">
+
+      <!-- ── Card principal de campos ─────────────────────────────── -->
+      <com.google.android.material.card.MaterialCardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="16dp"
+          android:layout_marginEnd="16dp"
+          app:cardBackgroundColor="@color/card_background"
+          app:cardCornerRadius="16dp"
+          app:cardElevation="4dp"
+          app:strokeColor="@color/card_border"
+          app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Información personal"
+              android:textColor="@color/text_primary"
+              android:textSize="18sp"
+              android:textStyle="bold"/>
+
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="4dp"
+              android:text="Actualiza tus datos de contacto"
+              android:textColor="@color/text_secondary"
+              android:textSize="14sp"/>
+
+          <!-- Correo (solo lectura) -->
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="24dp"
+              android:text="Correo electrónico"
+              android:textColor="@color/text_primary"
+              android:textSize="15sp"
+              android:textStyle="bold"/>
+
+          <TextView
+              android:id="@+id/txtEmailReadOnly"
+              android:layout_width="match_parent"
+              android:layout_height="54dp"
+              android:layout_marginTop="8dp"
+              android:background="@drawable/ic_input_background"
+              android:gravity="center_vertical"
+              android:paddingStart="18dp"
+              android:paddingEnd="18dp"
+              android:textColor="@color/text_secondary"
+              android:textSize="15sp"
+              android:drawableEnd="@drawable/ic_lock"
+              android:drawablePadding="8dp"/>
+
+          <!-- Nombre -->
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="18dp"
+              android:text="Nombre"
+              android:textColor="@color/text_primary"
+              android:textSize="15sp"
+              android:textStyle="bold"/>
+
+          <EditText
+              android:id="@+id/txtNombre"
+              android:layout_width="match_parent"
+              android:layout_height="54dp"
+              android:layout_marginTop="8dp"
+              android:background="@drawable/ic_input_background"
+              android:hint="Ej. Juan"
+              android:inputType="textPersonName|textCapWords"
+              android:paddingStart="18dp"
+              android:paddingEnd="18dp"
+              android:singleLine="true"
+              android:textColor="@color/text_primary"
+              android:textColorHint="@color/text_hint"
+              android:textSize="15sp"/>
+
+          <!-- Apellido Paterno -->
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="18dp"
+              android:text="Apellido paterno"
+              android:textColor="@color/text_primary"
+              android:textSize="15sp"
+              android:textStyle="bold"/>
+
+          <EditText
+              android:id="@+id/txtApellidoPaterno"
+              android:layout_width="match_parent"
+              android:layout_height="54dp"
+              android:layout_marginTop="8dp"
+              android:background="@drawable/ic_input_background"
+              android:hint="Ej. Pérez"
+              android:inputType="textPersonName|textCapWords"
+              android:paddingStart="18dp"
+              android:paddingEnd="18dp"
+              android:singleLine="true"
+              android:textColor="@color/text_primary"
+              android:textColorHint="@color/text_hint"
+              android:textSize="15sp"/>
+
+          <!-- Apellido Materno -->
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="18dp"
+              android:text="Apellido materno (Opcional)"
+              android:textColor="@color/text_primary"
+              android:textSize="15sp"
+              android:textStyle="bold"/>
+
+          <EditText
+              android:id="@+id/txtApellidoMaterno"
+              android:layout_width="match_parent"
+              android:layout_height="54dp"
+              android:layout_marginTop="8dp"
+              android:background="@drawable/ic_input_background"
+              android:hint="Ej. López"
+              android:inputType="textPersonName|textCapWords"
+              android:paddingStart="18dp"
+              android:paddingEnd="18dp"
+              android:singleLine="true"
+              android:textColor="@color/text_primary"
+              android:textColorHint="@color/text_hint"
+              android:textSize="15sp"/>
+
+          <!-- Teléfono -->
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="18dp"
+              android:text="Teléfono (Opcional)"
+              android:textColor="@color/text_primary"
+              android:textSize="15sp"
+              android:textStyle="bold"/>
+
+          <EditText
+              android:id="@+id/txtTelefono"
+              android:layout_width="match_parent"
+              android:layout_height="54dp"
+              android:layout_marginTop="8dp"
+              android:background="@drawable/ic_input_background"
+              android:hint="Ej. 5512345678"
+              android:inputType="phone"
+              android:paddingStart="18dp"
+              android:paddingEnd="18dp"
+              android:singleLine="true"
+              android:textColor="@color/text_primary"
+              android:textColorHint="@color/text_hint"
+              android:textSize="15sp"/>
+
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+      <!-- ── Botón guardar ─────────────────────────────────────────── -->
+      <Button
+          android:id="@+id/btnGuardar"
+          android:layout_width="match_parent"
+          android:layout_height="56dp"
+          android:layout_marginStart="16dp"
+          android:layout_marginEnd="16dp"
+          android:layout_marginTop="20dp"
+          android:background="@drawable/ic_button_primary_background"
+          android:text="Guardar cambios"
+          android:textAllCaps="false"
+          android:textColor="@android:color/white"
+          android:textSize="16sp"
+          android:textStyle="bold"/>
+
+    </LinearLayout>
+
+  </androidx.core.widget.NestedScrollView>
+
+  <!-- ── Avatar: anclado al borde inferior del AppBarLayout ──────────── -->
+  <!-- CoordinatorLayout lo posiciona automáticamente sobre el borde,
+       sin margin negativo. layout_anchor + layout_anchorGravity es el
+       patrón correcto para este efecto "hero avatar". -->
+  <com.google.android.material.imageview.ShapeableImageView
+      android:id="@+id/imgFotoPerfil"
+      android:layout_width="112dp"
+      android:layout_height="112dp"
+      android:scaleType="centerCrop"
+      android:src="@drawable/ic_avatar_placeholder"
+      android:elevation="4dp"
+      app:layout_anchor="@id/appBarLayout"
+      app:layout_anchorGravity="bottom|center_horizontal"
+      app:shapeAppearanceOverlay="@style/ShapeAppearance_Circle"
+      app:strokeColor="@android:color/white"
+      app:strokeWidth="4dp"/>
+
+  <!-- FAB de cámara: anclado sobre el avatar, desplazado a la derecha -->
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/fabCambiarFoto"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:contentDescription="Cambiar foto de perfil"
+      android:elevation="6dp"
+      android:src="@drawable/ic_camera"
+      app:backgroundTint="@color/primary"
+      app:fabSize="mini"
+      app:layout_anchor="@id/imgFotoPerfil"
+      app:layout_anchorGravity="bottom|end"
+      app:tint="@android:color/white"/>
+
+  <ProgressBar
+      android:id="@+id/progressBar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginTop="16dp"
+      android:visibility="gone"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

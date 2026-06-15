@@ -1,16 +1,19 @@
 package mx.edu.unpa.adoptame.model
 
-import com.google.gson.annotations.SerializedName
-
 /**
- * Mapeado 1:1 con SolicitudAdopcionResponseDTO.
- * estadoSolicitud es String para coincidir con el backend.
+ * Mapea SolicitudAdopcionResponseDTO del backend.
+ *
+ * Los campos con JOIN (nombreMascota, nombreSolicitante) son nullable porque
+ * podrían no estar presentes en todos los endpoints (p.ej. POST /solicitudes
+ * solo confirma la creación y puede no retornar los datos enriquecidos).
  */
 data class SolicitudAdopcion(
-    @SerializedName("idSolicitud")           val idSolicitud: Int,
-    @SerializedName("idMascota")             val idMascota: Int,
-    @SerializedName("idUsuarioSolicitante")  val idUsuarioSolicitante: Int,
-    @SerializedName("mensaje")               val mensaje: String?,
-    @SerializedName("estadoSolicitud")       val estadoSolicitud: String,  // "PENDIENTE" | "APROBADA" | "RECHAZADA"
-    @SerializedName("fechaSolicitud")        val fechaSolicitud: String?
+    val idSolicitud: Int,
+    val idMascota: Int,
+    val nombreMascota: String?,         // JOIN: Mascota.nombre
+    val idUsuarioSolicitante: Int,
+    val nombreSolicitante: String?,     // JOIN: Usuario.nombre + apellidoPaterno
+    val mensaje: String?,
+    val estadoSolicitud: String,        // PENDIENTE | APROBADA | RECHAZADA
+    val fechaSolicitud: String?
 )

@@ -34,7 +34,7 @@ public class AdopcionServiceImpl implements AdopcionService {
     }
 
     @Override
-    @Transactional // Esto asegura que si algo falla, no se guarde a medias.
+    @Transactional(rollbackFor = Exception.class)// Esto asegura que si algo falla, no se guarde a medias.
     public AdopcionResponseDTO concretarAdopcion(AdopcionRequestDTO requestDTO) {
         // 1. Guardar el registro de Adopción
         Adopcion adopcion = adopcionMapper.toEntity(requestDTO);
@@ -51,6 +51,16 @@ public class AdopcionServiceImpl implements AdopcionService {
                 .orElseThrow(() -> new RuntimeException("Solicitud no encontrada"));
         solicitud.setEstadoSolicitud("APROBADA");
         solicitudRepository.save(solicitud);
+        List<SolicitudAdopcion> solicitudesPendientes = solicitudRepository
+                .findByIdMascotaAndEstadoSolicitud(requestDTO.getIdMascota(), "PENDIENTE");
+
+        for (SolicitudAdopcion otraSolicitud : solicitudesPendientes) {
+            // Evitamos alterar la solicitud que acabamos de aprobar por seguridad
+            if (!otraSolicitud.getIdSolicitud().equals(requestDTO.getIdSolicitud())) {
+                otraSolicitud.setEstadoSolicitud("RECHAZADA");
+                solicitudRepository.save(otraSolicitud);
+            }
+        }
 
         // 4. Retornar la respuesta al cliente
         return adopcionMapper.toResponseDto(adopcionGuardada);

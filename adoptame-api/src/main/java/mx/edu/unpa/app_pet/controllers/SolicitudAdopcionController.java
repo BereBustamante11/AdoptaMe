@@ -2,6 +2,7 @@ package mx.edu.unpa.app_pet.controllers;
 
 import mx.edu.unpa.app_pet.dtos.request.SolicitudAdopcionRequestDTO;
 import mx.edu.unpa.app_pet.dtos.response.SolicitudAdopcionResponseDTO;
+import mx.edu.unpa.app_pet.dtos.response.SolicitudDonadorResponseDTO;
 import mx.edu.unpa.app_pet.services.SolicitudAdopcionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,5 +47,9 @@ public class SolicitudAdopcionController {
         String nuevoEstado = body.get("estadoSolicitud");
         SolicitudAdopcionResponseDTO actualizada = solicitudService.actualizarEstado(idSolicitud, nuevoEstado);
         return ResponseEntity.ok(actualizada);
+    }
+    @GetMapping("/donador/{idUsuario}")
+    public ResponseEntity<List<SolicitudDonadorResponseDTO>> obtenerSolicitudesDonador(@PathVariable Integer idUsuario) {
+        return ResponseEntity.ok(solicitudService.obtenerSolicitudesParaDonador(idUsuario));
     }
 }

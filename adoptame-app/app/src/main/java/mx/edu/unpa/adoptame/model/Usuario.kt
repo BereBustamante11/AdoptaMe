@@ -10,7 +10,8 @@ data class Usuario(
     @SerializedName("email")            val email: String,
     @SerializedName("telefono")         val telefono: String?,
     @SerializedName("activo")           val activo: Boolean,
-    @SerializedName("fechaRegistro")    val fechaRegistro: String
+    @SerializedName("fechaRegistro")    val fechaRegistro: String,
+    @SerializedName("urlFotoPerfil")    val urlFotoPerfil: String? = null
 ) {
     val nombreCompleto: String
         get() = "$nombre $apellidoPaterno ${apellidoMaterno.orEmpty()}".trim()
