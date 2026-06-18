@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SolicitudAdopcionServiceImpl implements SolicitudAdopcionService {
@@ -22,7 +23,10 @@ public class SolicitudAdopcionServiceImpl implements SolicitudAdopcionService {
     private final MascotaRepository mascotaRepository;
     private final UsuarioRepository usuarioRepository;
 
-    public SolicitudAdopcionServiceImpl(SolicitudAdopcionRepository solicitudRepository, SolicitudAdopcionMapper solicitudMapper, MascotaRepository mascotaRepository, UsuarioRepository usuarioRepository) {
+    public SolicitudAdopcionServiceImpl(SolicitudAdopcionRepository solicitudRepository,
+                                        SolicitudAdopcionMapper solicitudMapper,
+                                        MascotaRepository mascotaRepository,
+                                        UsuarioRepository usuarioRepository) {
         this.solicitudRepository = solicitudRepository;
         this.solicitudMapper = solicitudMapper;
         this.mascotaRepository = mascotaRepository;
@@ -38,32 +42,26 @@ public class SolicitudAdopcionServiceImpl implements SolicitudAdopcionService {
                 );
 
         if (solicitudExistente.isPresent()) {
-            // 2. Si ya existe, ACTUALIZAMOS la pasada en lugar de crear una nueva
             SolicitudAdopcion solicitud = solicitudExistente.get();
-
-            // Reemplazamos el mensaje viejo por el nuevo
             solicitud.setMensaje(requestDTO.getMensaje());
-
-            // Forzamos el estado a PENDIENTE (muy útil por si su solicitud pasada
-            // había sido "RECHAZADA" y el usuario está volviendo a intentar)
             solicitud.setEstadoSolicitud("PENDIENTE");
-
             SolicitudAdopcion actualizada = solicitudRepository.save(solicitud);
-            return solicitudMapper.toResponseDto(actualizada);
+            return enriquecerConNombreMascota(solicitudMapper.toResponseDto(actualizada));
         }
 
-        // 3. Si NO existe, creamos una totalmente nueva (Lógica original)
         SolicitudAdopcion nuevaSolicitud = solicitudMapper.toEntity(requestDTO);
         nuevaSolicitud.setEstadoSolicitud("PENDIENTE");
-
         SolicitudAdopcion guardada = solicitudRepository.save(nuevaSolicitud);
-        return solicitudMapper.toResponseDto(guardada);
+        return enriquecerConNombreMascota(solicitudMapper.toResponseDto(guardada));
     }
 
     @Override
     public List<SolicitudAdopcionResponseDTO> obtenerPorUsuario(Integer idUsuario) {
-        List<SolicitudAdopcion> solicitudes = solicitudRepository.findByIdUsuarioSolicitante(idUsuario);
-        return solicitudMapper.toResponseDtoList(solicitudes);
+        // ← MODIFICADO: ahora incluye nombreMascota en cada item
+        return solicitudRepository.findByIdUsuarioSolicitante(idUsuario)
+                .stream()
+                .map(s -> enriquecerConNombreMascota(solicitudMapper.toResponseDto(s)))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -76,11 +74,8 @@ public class SolicitudAdopcionServiceImpl implements SolicitudAdopcionService {
     public SolicitudAdopcionResponseDTO actualizarEstado(Integer idSolicitud, String nuevoEstado) {
         SolicitudAdopcion solicitud = solicitudRepository.findById(idSolicitud)
                 .orElseThrow(() -> new RuntimeException("Solicitud no encontrada"));
-
-        // APROBADA, RECHAZADA, etc.
         solicitud.setEstadoSolicitud(nuevoEstado);
         SolicitudAdopcion actualizada = solicitudRepository.save(solicitud);
-
         return solicitudMapper.toResponseDto(actualizada);
     }
 
@@ -97,17 +92,25 @@ public class SolicitudAdopcionServiceImpl implements SolicitudAdopcionService {
             dto.setEstadoSolicitud(solicitud.getEstadoSolicitud());
             dto.setFechaSolicitud(solicitud.getFechaSolicitud());
 
-            // JOIN lógico a Mascota
             mascotaRepository.findById(solicitud.getIdMascota()).ifPresent(mascota ->
                     dto.setNombreMascota(mascota.getNombre())
             );
 
-            // JOIN lógico a Usuario (Solicitante) con concatenación
             usuarioRepository.findById(solicitud.getIdUsuarioSolicitante()).ifPresent(usuario ->
                     dto.setNombreSolicitante(usuario.getNombre() + " " + usuario.getApellidoPaterno())
             );
 
             return dto;
-        }).collect(java.util.stream.Collectors.toList());
+        }).collect(Collectors.toList());
+    }
+
+    /**
+     * Rellena el campo nombreMascota del DTO buscando la mascota por id.
+     * Si la mascota no existe (caso imposible en datos limpios), deja el campo null.
+     */
+    private SolicitudAdopcionResponseDTO enriquecerConNombreMascota(SolicitudAdopcionResponseDTO dto) {
+        mascotaRepository.findById(dto.getIdMascota())
+                .ifPresent(mascota -> dto.setNombreMascota(mascota.getNombre()));
+        return dto;
     }
 }

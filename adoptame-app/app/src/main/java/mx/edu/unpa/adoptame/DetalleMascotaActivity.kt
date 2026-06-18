@@ -110,8 +110,17 @@ class DetalleMascotaActivity : AppCompatActivity() {
                     binding.txtEstado.setTextColor(getColor(colorRes))
 
                     // Ocultar botón si ya está en proceso o adoptado
-                    binding.btnSolicitarAdopcion.isEnabled =
-                        mascota.estadoAdopcion == "DISPONIBLE"
+                    val estaDisponible = mascota.estadoAdopcion == "DISPONIBLE"
+                    val esDonador      = mascota.idUsuarioDonador == sessionManager.getUserId()
+
+                    if (esDonador) {
+                        // Ocultamos completamente: ver el botón deshabilitado genera confusión
+                        // ("¿por qué no puedo adoptarla si está disponible?").
+                        binding.btnSolicitarAdopcion.visibility = View.GONE
+                    } else {
+                        binding.btnSolicitarAdopcion.visibility = View.VISIBLE
+                        binding.btnSolicitarAdopcion.isEnabled  = estaDisponible
+                    }
 
                     // ── 3. Cargar imágenes ────────────────────────────────────
                     cargarImagenes(idMascotaActual)

@@ -1,17 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Mis solicitudes enviadas (pata) -->
     <item
-        android:id="@+id/action_mis_solicitudes"
-        android:title="Mis solicitudes recibidas"
-        android:icon="@drawable/ic_notifications_24"
+        android:id="@+id/action_mis_solicitudes_enviadas"
+        android:title="Mis solicitudes enviadas"
+        android:icon="@drawable/ic_paw"
+        app:iconTint="@color/primary"
         app:showAsAction="always" />
 
-    <!-- Botón "+" para registrar mascota (visible siempre en toolbar) -->
+    <!-- Solicitudes recibidas como donador (campana) -->
+    <item
+        android:id="@+id/action_mis_solicitudes"
+        android:title="Solicitudes recibidas"
+        android:icon="@drawable/ic_bell"
+        app:iconTint="@color/primary"
+        app:showAsAction="always" />
+
+    <!-- Registrar mascota (círculo con +) -->
     <item
         android:id="@+id/action_registrar_mascota"
-        android:icon="@android:drawable/ic_input_add"
+        android:icon="@drawable/ic_add_circle"
         android:title="Registrar mascota"
+        app:iconTint="@color/primary"
+        app:showAsAction="always" />
+
+    <!-- Avatar de perfil (actionView con ImageView circular) -->
+    <item
+        android:id="@+id/action_perfil"
+        android:title="Mi perfil"
+        app:actionViewClass="android.widget.ImageView"
         app:showAsAction="always" />
 
     <!-- Menú de 3 puntos -->

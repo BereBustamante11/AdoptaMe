@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 public class SolicitudAdopcionResponseDTO {
     private Integer idSolicitud;
     private Integer idMascota;
+    private String nombreMascota;
     private Integer idUsuarioSolicitante;
     private String mensaje;
     private String estadoSolicitud;

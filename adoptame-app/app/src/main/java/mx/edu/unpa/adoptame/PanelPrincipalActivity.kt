@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -17,7 +18,6 @@ import kotlinx.coroutines.launch
 import mx.edu.unpa.adoptame.adapter.TipoMascotaAdapter
 import mx.edu.unpa.adoptame.databinding.ActivityPanelPrincipalBinding
 import mx.edu.unpa.adoptame.model.TipoMascota
-import mx.edu.unpa.adoptame.network.NetworkConfig
 import mx.edu.unpa.adoptame.repository.MascotaRepository
 import mx.edu.unpa.adoptame.session.SessionManager
 import mx.edu.unpa.adoptame.util.Result
@@ -39,26 +39,45 @@ class PanelPrincipalActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        configurarAvatarToolbar()
         cargarTiposMascota()
     }
 
-    /**
-     * onResume: recargamos el avatar por si el usuario regresa de
-     * EditarPerfilActivity habiendo cambiado su foto.
-     */
     override fun onResume() {
         super.onResume()
-        configurarAvatarToolbar()
+        // Recargamos el menú para actualizar el avatar si cambió la foto
+        invalidateOptionsMenu()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_panel_principal, menu)
+
+        // Avatar circular como acción en el extremo derecho del toolbar
+        val itemAvatar = menu.findItem(R.id.action_perfil)
+        val avatarView = itemAvatar?.actionView as? ImageView ?: return true
+
+        avatarView.layoutParams = android.view.ViewGroup.LayoutParams(96, 96)
+        avatarView.scaleType = ImageView.ScaleType.CENTER_CROP
+
+        Glide.with(this)
+            .load(UrlHelper.fotoPerfilUrl(sessionManager.getUserFotoUrl()))
+            .transform(CircleCrop())
+            .placeholder(R.drawable.ic_avatar_placeholder)
+            .error(R.drawable.ic_avatar_placeholder)
+            .into(avatarView)
+
+        avatarView.setOnClickListener {
+            startActivity(Intent(this, EditarPerfilActivity::class.java))
+        }
+
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.action_mis_solicitudes_enviadas -> {
+                startActivity(Intent(this, MisSolicitudesActivity::class.java))
+                true
+            }
             R.id.action_mis_solicitudes -> {
                 startActivity(Intent(this, GestionSolicitudesActivity::class.java))
                 true
@@ -79,27 +98,6 @@ class PanelPrincipalActivity : AppCompatActivity() {
         }
     }
 
-    // ── Avatar ────────────────────────────────────────────────────────────────
-
-    /**
-     * Carga la foto de perfil desde la URL en caché (SessionManager).
-     * Si no hay URL, Glide muestra el placeholder automáticamente.
-     *
-     * El click navega a EditarPerfilActivity.
-     */
-    private fun configurarAvatarToolbar() {
-        Glide.with(this)
-            .load(UrlHelper.fotoPerfilUrl(sessionManager.getUserFotoUrl()))
-            .transform(CircleCrop())
-            .placeholder(R.drawable.ic_avatar_placeholder)
-            .error(R.drawable.ic_avatar_placeholder)
-            .into(binding.imgAvatarToolbar)
-
-        binding.imgAvatarToolbar.setOnClickListener {
-            startActivity(Intent(this, EditarPerfilActivity::class.java))
-        }
-    }
-
     // ── Tipos de mascota ──────────────────────────────────────────────────────
 
     private fun cargarTiposMascota() {
@@ -116,10 +114,6 @@ class PanelPrincipalActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * FIX (code smell): las llamadas ahora se hacen en paralelo con async/awaitAll.
-     * Antes eran secuenciales (1 por tipo), ahora todas se lanzan a la vez.
-     */
     private fun configurarRecycler(tipos: List<TipoMascota>) {
         lifecycleScope.launch {
             val conteos = try {
